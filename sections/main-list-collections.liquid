@@ -2,7 +2,32 @@
 {{ 'section-collection-list.css' | asset_url | stylesheet_tag }}
 
 <div class="page-width">
-  <h1 class="title title--primary">{{ section.settings.title | escape }}</h1>
+  <div class="collection-list__header-container">
+    <img
+    srcset="
+      {%- if section.settings.header_image.width >= 165 -%}{{ section.settings.header_image | image_url: width: 165 }} 165w,{%- endif -%}
+      {%- if section.settings.header_image.width >= 330 -%}{{ section.settings.header_image | image_url: width: 330 }} 330w,{%- endif -%}
+      {%- if section.settings.header_image.width >= 535 -%}{{ section.settings.header_image | image_url: width: 535 }} 535w,{%- endif -%}
+      {%- if section.settings.header_image.width >= 750 -%}{{ section.settings.header_image | image_url: width: 750 }} 750w,{%- endif -%}
+      {%- if section.settings.header_image.width >= 1000 -%}{{ section.settings.header_image | image_url: width: 1000 }} 1000w,{%- endif -%}
+      {%- if section.settings.header_image.width >= 1500 -%}{{ section.settings.header_image | image_url: width: 1500 }} 1500w,{%- endif -%}
+      {%- if section.settings.header_image.width >= 3000 -%}{{ section.settings.header_image | image_url: width: 3000 }} 3000w,{%- endif -%}
+      {{ section.settings.header_image | image_url }} {{ section.settings.header_image.width }}w
+    "
+    src="{{ section.settings.header_image | image_url: width: 1500 }}"
+    sizes="
+      (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: columns }}px,
+      (min-width: 750px) {% if columns > 1 %}calc((100vw - 10rem) / 2){% else %}calc(100vw - 10rem){% endif %},
+      calc(100vw - 3rem)
+    "
+    alt=""
+    height="{{ section.settings.header_image.height }}"
+    width="{{ section.settings.header_image.width }}"
+    loading="lazy"
+    class="motion-reduce"
+  >
+    <h1 class="title title--primary">Test {{ section.settings.title | escape }}</h1>
+  </div>
   {%- liquid
     case section.settings.sort
       when 'products_high', 'products_low'
@@ -49,6 +74,11 @@
       "id": "title",
       "label": "t:sections.main-list-collections.settings.title.label",
       "default": "Collections"
+    },
+    {
+      "type": "image_picker",
+      "id": "header_image",
+      "label": "Header Background Image"
     },
     {
       "type": "select",
