@@ -4,8 +4,11 @@
       "type": "main-list-collections",
       "settings": {
         "title": "Collections",
+        "header_image": "shopify:\/\/shop_images\/crumbs_1.png",
         "sort": "alphabetical",
-        "image_ratio": "square"
+        "image_ratio": "square",
+        "columns_desktop": 3,
+        "columns_mobile": "2"
       }
     }
   },
